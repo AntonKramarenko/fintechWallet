@@ -1,11 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import cardBalance from './cardsBalance';
-
+import balance from './balance';
+import cards from './cards';
+import modalWindow from './modalWindow';
 
 export const store = configureStore({
 	reducer: {
-		balance:cardBalance
+		balance: balance,
+		cards: cards,
+		modal: modalWindow
 	}
 });
 

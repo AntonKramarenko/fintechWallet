@@ -4,13 +4,17 @@ import { BalanceBar } from './components/BalanceBar';
 import { ModalWindow } from './components/ModalWindow';
 import { AddCard } from './pages/AddCard';
 import { Wallet } from './pages/Wallet';
+import { useAppSelector } from './store';
 import './styless/index.scss';
 
 function App() {
+
+	const isVisibleModal = useAppSelector(state => state.modal);
+
 	return (
 		<div className='app'>
 			<BalanceBar/>
-			{/* <ModalWindow/> */}
+			{isVisibleModal && <ModalWindow/>}
 			<div className='container'>
 				<Routes>
 					<Route path='/wallet' element={<Wallet/>} />

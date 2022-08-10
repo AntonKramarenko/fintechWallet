@@ -3,18 +3,17 @@ import './Button.scss';
 
 interface IButton{
 	title:string,
-    type?: string,
+    type: string,
     active:boolean,
 	styleType:string,
-    click:() => void
+    click?:() => void
 }
 
 export const Button:React.FC<IButton> = ({type, active,click,styleType,title}) => {
 
-	
 	return (
 		<> 
-			{active && <button type='submit' className={`btn btn-${ styleType }`}>{title}</button>}
+			{active && <button type='submit' onClick={click} className={`btn btn-${ styleType }`}>{title}</button>}
 		</>
 	);
 };
