@@ -3,9 +3,10 @@ import { EditCurrency } from '../EditCurrency';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
 import './ModalWindow.scss';
-import { useAppDispatch } from '../../store';
+import { useAppDispatch, useAppSelector } from '../../store';
 import { isVisibleModal } from '../../store/modalWindow';
-import { changeCash } from '../../store/balance';
+import { addCash, changeCash } from '../../store/balance';
+import { MODAL_ACTION } from '../../types/modalAction';
 
 type Inputs = {
     amount: string,
@@ -13,21 +14,25 @@ type Inputs = {
   };
 
 export const ModalWindow = () => {
-	const { register, handleSubmit, watch, formState: { errors } } = useForm<Inputs>();
+	const modalAction = useAppSelector(state => state.modal.action);
+	const { register, handleSubmit, formState: { errors } } = useForm<Inputs>();
 	const dispatch = useAppDispatch();
 
 	const onSubmit: SubmitHandler<Inputs> = data => {
-		dispatch(changeCash(data));
-		dispatch(isVisibleModal(false));
+		switch (modalAction) {
+		case MODAL_ACTION.ADD_CASH:dispatch(addCash(data));
+			break;
+		case MODAL_ACTION.EDIT_CASH: dispatch(changeCash(data));
+			break;
+		}
+
+		
+		dispatch(isVisibleModal({isVisible: false, action: MODAL_ACTION.DEFAULT }));
 	};
 
-	const handleSucces  = ()=>{
-	
-	};
+	const handleSucces = ()=> {};
 
-	const handleReject = ()=>{
-		dispatch(isVisibleModal(false));
-	};
+	const handleReject = ()=> dispatch(isVisibleModal({isVisible: false, action: MODAL_ACTION.DEFAULT }));
 
 	return (
 		<div  className='modalWindow'>

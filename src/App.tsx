@@ -9,7 +9,7 @@ import './styless/index.scss';
 
 function App() {
 
-	const isVisibleModal = useAppSelector(state => state.modal);
+	const isVisibleModal = useAppSelector(state => state.modal.isVisible);
 
 	return (
 		<div className='app'>

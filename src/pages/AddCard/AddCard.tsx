@@ -17,18 +17,22 @@ export const AddCard:React.FC = () => {
 	const { register, handleSubmit, formState: { errors } } = useForm<IAddCardInput>();
 
 	const onSubmit: SubmitHandler<IAddCardInput> = async data => {
+		try {
+			const cardInfo = await fetch(`https://lookup.binlist.net/${ data.cardNumber }`)
+      			.then(res => res.json())
+      			.then((result) => {
+					const fullInfoCard:IFullCardInfo = {...data};
+					fullInfoCard['bank'] = result.bank.name || 'BANK';
+					fullInfoCard['scheme'] = result.scheme;
+					fullInfoCard['type'] = result.type;
+					return fullInfoCard;
+				});
 
-		const cardInfo = await fetch(`https://lookup.binlist.net/${ data.cardNumber }`)
-      	.then(res => res.json())
-      	.then((result) => {
-				const fullInfoCard:IFullCardInfo = {...data};
-				fullInfoCard['bank'] = result.bank.name || 'BANK';
-				fullInfoCard['scheme'] = result.scheme;
-				fullInfoCard['type'] = result.type;
-				return fullInfoCard;
-			});	
-		dispatch(addCard(cardInfo));
-		navigate('./wallet');
+			dispatch(addCard(cardInfo));
+			navigate('./wallet');
+		} catch (error) {
+			 throw new Error();
+		}
 	};
 
 	const handleSucces =()=>{};

@@ -1,13 +1,21 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { MODAL_ACTION } from '../types/modalAction';
+interface ImodalWindowState {
+	isVisible:boolean,
+	action:string
+}
 
-const initialState:boolean= false;
+const initialState:ImodalWindowState={
+	isVisible: false,
+	action: MODAL_ACTION.DEFAULT
+};
 
 export const modalWindowSlice = createSlice({
 	name: ' modalWindow',
 	initialState,
 	reducers: {
-		isVisibleModal(state:boolean, action:PayloadAction<boolean>){
-			return action.payload;
+		isVisibleModal(state:any, action:PayloadAction<ImodalWindowState>){
+			return  action.payload;
 		}
 	}
 });

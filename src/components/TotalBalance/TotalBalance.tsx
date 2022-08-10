@@ -1,21 +1,30 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store';
+import { installTotalBalance } from '../../store/balance';
 import { isVisibleModal } from '../../store/modalWindow';
 import { ITotalBalance } from '../../types/interfaces';
-import { CardsBox } from '../CardsBox';
+import { calculateTotalBalance } from './calculateBalance';
 import { BalanceItem } from '../ui/BalanceItem';
 import './TotalBalance.scss';
+import { MODAL_ACTION } from '../../types/modalAction';
 
 interface ITotalBalanceProp{
 }
 
 export const TotalBalance:React.FC<ITotalBalanceProp> = () => {
-	const balance = useAppSelector(state => state.balance);
+	const state = useAppSelector(state => state);
 	const dispatch = useAppDispatch();
 
-	const editCashHandler =()=>{
-		dispatch(isVisibleModal(true));
-	};
+	const {balance, cards } = state;
+
+
+	useEffect(() => {
+		dispatch(installTotalBalance(calculateTotalBalance(cards, balance.cashBalance)));
+	}, [ cards, balance.cashBalance ]);
+	
+
+
+	const editCashHandler =()=> dispatch(isVisibleModal({isVisible: true, action: MODAL_ACTION.EDIT_CASH }));
 	
 	return (
 		<div className='totalBalance'>
@@ -24,9 +33,8 @@ export const TotalBalance:React.FC<ITotalBalanceProp> = () => {
 				<BalanceItem 
 					key={item.currency}
 					canEdit={false}
-					balanceValue={item.value}
-					balanceCurrency={item.currency} 
-					balanceLocal={item.locales}			
+					balanceValue={String(item.amount)}
+					balanceCurrency={item.currency} 		
 				/>)}
 			<div className='totalBalance__cash'>
 				<h3 className='totalBalance__subTitle'>Готівка</h3>
@@ -34,9 +42,8 @@ export const TotalBalance:React.FC<ITotalBalanceProp> = () => {
 					<BalanceItem 
 						key={item.currency}
 						canEdit={true}
-						balanceValue={item.value}
+						balanceValue={String(item.amount)}
 						balanceCurrency={item.currency} 
-						balanceLocal={item.locales}	
 						click={editCashHandler}			
 					/>)}
 			</div>

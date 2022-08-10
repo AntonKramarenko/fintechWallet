@@ -1,7 +1,6 @@
 export interface ITotalBalance {
 	currency: string,
-	value: number,
-	locales: string
+	amount: number,
 }
 
 export interface IAddCardInput  {

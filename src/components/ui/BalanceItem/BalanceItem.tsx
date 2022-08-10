@@ -4,15 +4,14 @@ import {toCurrency} from '../../../helpers/toCurrency';
 import './BalanceItem.scss';
 
 interface IBalanceItem{
-	balanceValue: number,
+	balanceValue: string,
 	balanceCurrency: string,
-	balanceLocal: string
   	bank?:string,
   	canEdit: boolean,
 	click?: () => void
 }
 
-export const BalanceItem:React.FC<IBalanceItem> = ({bank,canEdit,balanceValue,balanceCurrency, balanceLocal,click}) => {
+export const BalanceItem:React.FC<IBalanceItem> = ({bank,canEdit,balanceValue,balanceCurrency,click}) => {
 	
 	return (
 		<div className='balanceItem'>

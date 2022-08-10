@@ -1,21 +1,40 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { toCurrency } from '../../helpers/toCurrency';
 import './CreditCard.scss';
 
-export const CreditCard = () => {
+interface ICreditCard{
+	bank?: string | undefined,
+	scheme?:string | undefined,
+	type?:string | undefined,
+	amount: string,
+	currency: string,
+	cardNumber:string,
+	expDate: string
+}
+
+export const CreditCard: React.FC<ICreditCard> = ({bank,scheme,type,amount,cardNumber,expDate,currency}) => {
+	const [ isCopy, setIsCopy ] = useState(false);
+
+	const clickCopyHandler = () =>{
+		navigator.clipboard.writeText(cardNumber);
+		setIsCopy(true);
+	};
 
 	return (
 		<div className='creditCard'>
-			<span className='creditCard__bank'>MONO</span>
-			<div className='creditCard__info'>
-				<div className='creditCard__paymentSystem'>Visa</div>
-				<div className='creditCard__cardType'>Debit</div>
+			{bank && <span className='creditCard__bank'>{bank}</span>}
+			 <div className='creditCard__info'>
+				<div className='creditCard__paymentSystem'>{scheme}</div>
+				<div className='creditCard__cardType'>{type}</div>
 			</div>
-			<span className='creditCard__amount'>1000 UAH</span>
-			<span className='creditCard__cardNumber'>
-                1234 1234 1234 1234 
-				<span className='creditCard__copyNumber'> copy</span>
+			<span className='creditCard__amount'>{toCurrency(amount, currency)}</span>
+			<span className='creditCard__cardNumber' >
+				{cardNumber}
+				<span className='creditCard__copyNumber' onClick={clickCopyHandler}>
+					{isCopy? 'copied' :'copy'  }
+				</span>
 			</span>
-			<span className='creditCard__expDate'>21/01</span>
+			<span className='creditCard__expDate'>{expDate}</span>
 		</div>
 	);
 };

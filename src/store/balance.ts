@@ -8,10 +8,10 @@ interface IInitialBalance{
 
 const initialState:IInitialBalance = {
 	totalBalance: [
-		{currency: 'UAH', value: 0, locales: 'ua-UA'}
+		{currency: 'UAH', amount: 0}
 	],
 	cashBalance: [
-		{currency: 'UAH', value: 0, locales: 'ua-UA'}
+		{currency: 'UAH', amount: 0}
 	]
 };
 
@@ -19,14 +19,32 @@ export const cardBalanceSlice = createSlice({
 	name: 'cardBalance',
 	initialState,
 	reducers: {
+		installTotalBalance(state:IInitialBalance,action:PayloadAction<ITotalBalance[]>){
+			state.totalBalance = action.payload;
+
+		},
 		changeCash(state:IInitialBalance, action:PayloadAction<{currency: string, amount: string}>){
-			state.cashBalance.map(item => {
-				if(item.currency === action.payload.currency) item.value = +action.payload.amount; 
-				return item;
+			let isHasAmount = false;
+			state.cashBalance.forEach(item => {
+				if(item.currency === action.payload.currency) {
+					item.amount = +action.payload.amount; 
+					isHasAmount = true;
+				}
 			});
+
+			if(!isHasAmount){
+				state.cashBalance.push({currency: action.payload.currency, amount: +action.payload.amount});
+			}
+		},
+		addCash(state:IInitialBalance,action:PayloadAction<{currency: string, amount: string}>){
+			state.cashBalance.forEach(item => {
+				if(item.currency === action.payload.currency){
+					item.amount += +action.payload.amount;
+				}
+			});	
 		}
 	}
 });
 
-export const { changeCash} = cardBalanceSlice.actions;
+export const { changeCash,installTotalBalance,addCash} = cardBalanceSlice.actions;
 export default cardBalanceSlice.reducer;

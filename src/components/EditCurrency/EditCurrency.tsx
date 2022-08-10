@@ -20,7 +20,7 @@ const input = {
 			message : 'Поле обовʼязкове для введеня'
 		},
 		min:{
-			value: 1,
+			value: 0,
 			message : 'Значення має бути більше 0'
 		},
 		validate: isValidAmount

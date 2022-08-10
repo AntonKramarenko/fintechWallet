@@ -1,13 +1,17 @@
+import { CURRENCIES } from '../types/currencies';
 
-
-export const toCurrency = (price:number,currency:string ) => {
-
-
-	console.log(currency,'UAH');
-
-	
-	return new Intl.NumberFormat('ua-UA', {
+const amountConverter = (price:string, currency:string,location:string) =>{
+	return new Intl.NumberFormat(location, {
 		style: 'currency',
-		currency: 'UAH'
-	}).format(price);
+		currency: currency
+	}).format(parseInt(price));
+
+};
+
+export const toCurrency = (price:string,currency:string ) => {
+	switch (currency) {
+	case CURRENCIES.UAH: return  amountConverter(price, currency, 'ua-UA');
+	case CURRENCIES.USD: return  amountConverter(price, currency, 'en-US');
+	case CURRENCIES.EUR: return  amountConverter(price, currency, 'eu');
+	}
 };
