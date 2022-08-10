@@ -1,0 +1,37 @@
+@import '../../styless/colors.scss';
+@import '../../styless/styles.scss';
+@import '../../styless/fonts.scss';
+
+
+.creditCard{
+    display: grid;
+    border: 1px solid black;
+    width: 400px;
+    background: $background;
+    border-radius: $border-radius;
+    padding: 20px 20px;
+    position: relative;
+    font-family: $font-family-card;
+    letter-spacing: .2rem;
+    line-height: 2.5rem;
+    margin: 40px 0;
+    font-size: 1.3rem;
+
+    &__info{
+        position: absolute;
+        right: 10px;
+        top: 18px;
+    }
+
+    &__cardNumber{
+        cursor: pointer;
+    }
+
+    &__copyNumber{
+        margin-left: 25px;
+        color: $color-secondaty;
+        font-weight: 300;
+        font-size: .9rem;
+        text-transform: uppercase;
+    }
+}

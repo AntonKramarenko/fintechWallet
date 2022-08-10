@@ -1,0 +1,21 @@
+.editCurrency{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 20px;
+
+    &__btns{
+        display: grid;
+        grid-template-columns: repeat(2,1fr);
+        gap: 20px;
+    }
+
+    div:nth-child(1){
+        grid-column-start: 1;
+        grid-column-end: 1;
+    }
+
+    div:nth-child(3){
+        grid-column-start: 1;
+        grid-column-end: 3;
+    }
+}
