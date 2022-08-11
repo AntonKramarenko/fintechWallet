@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IAddCardInput, IFullCardInfo } from '../types/interfaces';
+import {  IFullCardInfo } from '../types/interfaces';
 
 
 
@@ -21,9 +21,12 @@ export const cardsSlice = createSlice({
 	reducers: {
 		addCard(state:IFullCardInfo[], action:PayloadAction<IFullCardInfo>){
 			state.push(action.payload);
+		},
+		deleteCard(state:IFullCardInfo[], action:PayloadAction<{cardNumber:string}>){
+			return state.filter(card => card.cardNumber !== action.payload.cardNumber);
 		}
 	}
 });
 
-export const { addCard } = cardsSlice.actions;
+export const { addCard,deleteCard } = cardsSlice.actions;
 export default cardsSlice.reducer;

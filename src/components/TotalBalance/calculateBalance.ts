@@ -1,8 +1,9 @@
+import { Type } from 'typescript';
 import { CURRENCIES } from '../../types/currencies';
 import { IFullCardInfo, ITotalBalance } from '../../types/interfaces';
 
 export const calculateTotalBalance = (cards:IFullCardInfo[], cash:ITotalBalance[]) =>{
-	const balansesArr = [];
+	const balansesArr:ITotalBalance[] = [];
 
 	let totalUah = 0;
 	let totalUsd = 0;

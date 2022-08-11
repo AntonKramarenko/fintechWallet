@@ -21,7 +21,6 @@ export const cardBalanceSlice = createSlice({
 	reducers: {
 		installTotalBalance(state:IInitialBalance,action:PayloadAction<ITotalBalance[]>){
 			state.totalBalance = action.payload;
-
 		},
 		changeCash(state:IInitialBalance, action:PayloadAction<{currency: string, amount: string}>){
 			let isHasAmount = false;
@@ -37,11 +36,17 @@ export const cardBalanceSlice = createSlice({
 			}
 		},
 		addCash(state:IInitialBalance,action:PayloadAction<{currency: string, amount: string}>){
+			let isHasAmount = false;
 			state.cashBalance.forEach(item => {
 				if(item.currency === action.payload.currency){
 					item.amount += +action.payload.amount;
+					isHasAmount = true;
 				}
 			});	
+
+			if(!isHasAmount){
+				state.cashBalance.push({currency: action.payload.currency, amount: +action.payload.amount});
+			}
 		}
 	}
 });

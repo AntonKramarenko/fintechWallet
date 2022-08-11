@@ -16,6 +16,7 @@ export const inputsValues = [
 				value: 16,
 				message: 'Максимум  16  цифр'
 			},
+			//\\b([0-9]{4})[0-9]{0,9}([0-9]{4})\\b
 			validate: isValidCardNumber
 		}
 	},

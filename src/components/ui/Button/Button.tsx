@@ -6,7 +6,7 @@ interface IButton{
     type: string,
     active:boolean,
 	styleType:string,
-    click?:() => void
+    click?:(event) => void
 }
 
 export const Button:React.FC<IButton> = ({type, active,click,styleType,title}) => {

@@ -10,11 +10,22 @@ import { addCard } from '../../store/cards';
 import { IAddCardInput, IFullCardInfo } from '../../types/interfaces';
 
 
-
 export const AddCard:React.FC = () => {
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
-	const { register, handleSubmit, formState: { errors } } = useForm<IAddCardInput>();
+	const { register, handleSubmit, formState: { errors } } = useForm<IAddCardInput>(
+		{
+			mode: 'onBlur',
+			reValidateMode: 'onBlur',
+			defaultValues: {
+				'cardNumber': '6703444444444449',
+				'expDate': '1230',
+				'cw': '123'
+
+			},
+			shouldFocusError: true
+		}
+	);
 
 	const onSubmit: SubmitHandler<IAddCardInput> = async data => {
 		try {
